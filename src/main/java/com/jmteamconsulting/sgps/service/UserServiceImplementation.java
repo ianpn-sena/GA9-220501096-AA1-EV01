@@ -82,6 +82,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -169,5 +174,10 @@ public class UserServiceImplementation implements UserService {
         entityManager.refresh(user);
         
         return user;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 }

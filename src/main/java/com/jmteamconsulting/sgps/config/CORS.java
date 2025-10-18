@@ -6,9 +6,12 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Define la configuración de CORS del servidor.
+ * Acepta conexiones HTTPS del frontend local.
+ */
 @Configuration
 public class CORS {
-
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
