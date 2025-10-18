@@ -1,4 +1,4 @@
-insert into countries (area_code,country_code) values ("57","CO")
+insert into countries (name,area_code,country_code) values ("Colombia","57","CO")
 insert into departments (code,country_id,name) values ("CU",1,"Cundinamarca")
 insert into departments (code,country_id,name) values ("AN",1,"Antioquia")
 insert into departments (code,country_id,name) values ("VC",1,"Valle del Cauca")

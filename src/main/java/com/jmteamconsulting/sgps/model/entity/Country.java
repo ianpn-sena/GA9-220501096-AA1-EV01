@@ -39,6 +39,9 @@ public class Country {
     @JsonBackReference
     List<Contact> contacts;
 
+    @Column(name = "name", nullable = false)
+    String name;
+
     @Column(name = "country_code", nullable = false)
     String countryCode;
 
@@ -92,5 +95,13 @@ public class Country {
 
     public List<Contact> getContacts() {
         return contacts;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
