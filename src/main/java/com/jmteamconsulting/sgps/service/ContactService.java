@@ -21,7 +21,7 @@ public interface ContactService {
      * Crea o actualiza un registro Contact en la base de datos.
      * 
      * @param document El objeto Contact que se gusta guardar o actualizar. Si contiene un ID, se inserta; de lo contrario, se actualiza.
-     * @returnEl Contact que se acaba de crear, o que se acaba de actualizar.
+     * @return El Contact que se acaba de crear, o que se acaba de actualizar.
      */
     public Contact save(Contact document);
 }

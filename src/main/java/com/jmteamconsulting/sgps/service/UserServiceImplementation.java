@@ -85,7 +85,7 @@ public class UserServiceImplementation implements UserService {
      * Intenta identificar un User con el sistema.
      * 
      * @param email El email del User que se busca autenticar con el sistema.
-     * @param email El password del User que se busca autenticat con el sistema.
+     * @param password El password del User que se busca autenticat con el sistema.
      * @return Si el User existe, y si el email y password coinciden, entonces se regresa un token de sesión. De lo contrario, se regresa null, 
      */
     @Override

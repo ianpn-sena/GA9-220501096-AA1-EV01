@@ -30,7 +30,10 @@ public class ContactServiceImplementation implements ContactService {
     }
 
     /**
-     * El Contact que se busca insertar o actualizar en la base de datos.
+     * Crea o actualiza un registro Contact en la base de datos.
+     * 
+     * @param document El objeto Contact que se gusta guardar o actualizar. Si contiene un ID, se inserta; de lo contrario, se actualiza.
+     * @returnEl Contact que se acaba de crear, o que se acaba de actualizar.
      */
     @Override
     public Contact save(Contact contact) {
