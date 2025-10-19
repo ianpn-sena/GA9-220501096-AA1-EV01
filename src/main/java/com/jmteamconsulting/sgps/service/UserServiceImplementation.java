@@ -209,9 +209,6 @@ public class UserServiceImplementation implements UserService {
         user.setPassword(password);
         userRepository.save(user);
 
-        // Importante: se refresca la instancia antes de regresarla. Es necesario para incluir algunos campos actualizados de sus relaciones.
-        entityManager.refresh(user);
-
         return user;
     }
 
