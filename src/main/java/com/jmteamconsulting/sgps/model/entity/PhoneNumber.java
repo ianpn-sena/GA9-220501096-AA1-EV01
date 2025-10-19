@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad PhoneNumber, número telefónic. Define también sus relaciones.
+ */
 @Entity(name = "PhoneNumber")
 @Table(name = "phone_numbers")
 public class PhoneNumber {

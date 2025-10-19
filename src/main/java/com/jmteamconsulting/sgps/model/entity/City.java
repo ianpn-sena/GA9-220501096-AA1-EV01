@@ -17,6 +17,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad City, ciudad. Define también sus relaciones.
+ */
 @Entity(name = "City")
 @Table(name = "cities")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})

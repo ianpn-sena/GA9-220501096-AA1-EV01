@@ -13,6 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad User, usuario. Define también sus relaciones.
+ */
 @Entity(name = "User")
 @Table(name = "users")
 public class User {

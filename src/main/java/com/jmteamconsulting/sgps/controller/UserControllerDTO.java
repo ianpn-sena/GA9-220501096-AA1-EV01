@@ -2,6 +2,10 @@ package com.jmteamconsulting.sgps.controller;
 
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * DTO (Data Transfer Object) usado por cuerpos de requests de UserController.
+ * Define la estructura y validaciones del RequesstBody de algunos requests de UserController.
+ */
 public class UserControllerDTO {
     @NotNull
     public String names;

@@ -17,6 +17,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad DocumentType, tipos de documentos de identidad. Define también sus relaciones.
+ */
 @Entity(name = "DocumentType")
 @Table(name = "document_types")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})

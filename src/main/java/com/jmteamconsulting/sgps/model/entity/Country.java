@@ -14,6 +14,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad Country, país. Define también sus relaciones.
+ */
 @Entity(name = "Country")
 @Table(name = "countries")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -49,7 +52,9 @@ public class Country {
     String areaCode;
 
     public Country() {
-        
+        /**
+ * Modela la entiad City, ciudad. Define también sus relaciones.
+ */
     }
 
     public Country(String countryCode, String areaCode) {

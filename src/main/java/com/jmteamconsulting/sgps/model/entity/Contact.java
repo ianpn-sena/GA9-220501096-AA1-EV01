@@ -17,6 +17,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad Contact, información de contacto. Define también sus relaciones.
+ */
 @Entity(name = "Contact")
 @Table(name = "contact")
 public class Contact {

@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.jmteamconsulting.sgps.model.entity.Contact;
 
+/**
+ * Interfaz repositorio JPA de la entidad Contact.
+ * 
+ * Hereda varios métodos JPA de JpaRepository.
+ * La mayoría de sus implementaciones están definidas por JPA.
+ */
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     

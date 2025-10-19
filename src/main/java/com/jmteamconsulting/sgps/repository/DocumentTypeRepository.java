@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository;
 
 import com.jmteamconsulting.sgps.model.entity.DocumentType;
 
+/**
+ * Interfaz repositorio JPA de la entidad DocumentType.
+ * 
+ * Hereda varios métodos JPA de JpaRepository.
+ * La mayoría de sus implementaciones están definidas por JPA.
+ */
 @Repository
 public interface DocumentTypeRepository extends JpaRepository<DocumentType, Long> {
     

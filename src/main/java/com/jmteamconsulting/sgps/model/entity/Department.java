@@ -17,6 +17,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad Department, departamento. Define también sus relaciones.
+ */
 @Entity(name = "Department")
 @Table(name = "departments")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})

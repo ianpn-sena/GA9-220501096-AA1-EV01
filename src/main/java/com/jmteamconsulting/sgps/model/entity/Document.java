@@ -13,6 +13,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Modela la entiad Document, documentos de identidad. Define también sus relaciones.
+ */
 @Entity(name = "Document")
 @Table(name = "documents")
 public class Document {
