@@ -14,6 +14,7 @@ import com.jmteamconsulting.sgps.repository.CountryRepository;
  * operaciones sobre registros Country.
  */
 @Service
+@SuppressWarnings("null")
 public class CountryServiceImplementation implements CountryService {
     @Autowired
     CountryRepository countryRepository;

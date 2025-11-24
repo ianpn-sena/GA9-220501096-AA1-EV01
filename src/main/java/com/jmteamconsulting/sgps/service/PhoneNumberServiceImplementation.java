@@ -14,6 +14,7 @@ import com.jmteamconsulting.sgps.repository.PhoneNumberRepository;
  * operaciones sobre registros PhoneNumber.
  */
 @Service
+@SuppressWarnings("null")
 public class PhoneNumberServiceImplementation implements PhoneNumberService {
     @Autowired
     PhoneNumberRepository phoneNumberRepository;

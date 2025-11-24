@@ -14,6 +14,7 @@ import com.jmteamconsulting.sgps.repository.DocumentRepository;
  * operaciones sobre registros Document.
  */
 @Service
+@SuppressWarnings("null")
 public class DocumentServiceImplementation implements DocumentService {
     @Autowired
     DocumentRepository documentRepository;

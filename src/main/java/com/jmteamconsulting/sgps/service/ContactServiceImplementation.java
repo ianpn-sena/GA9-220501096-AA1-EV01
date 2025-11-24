@@ -14,6 +14,7 @@ import com.jmteamconsulting.sgps.repository.ContactRepository;
  * operaciones sobre registros Contact.
  */
 @Service
+@SuppressWarnings("null")
 public class ContactServiceImplementation implements ContactService {
     @Autowired
     ContactRepository contactRepository;

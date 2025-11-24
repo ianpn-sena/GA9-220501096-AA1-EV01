@@ -30,6 +30,7 @@ import jakarta.persistence.PersistenceContext;
  * operaciones sobre registros User.
  */
 @Service
+@SuppressWarnings("null")
 public class UserServiceImplementation implements UserService {
 
     /**

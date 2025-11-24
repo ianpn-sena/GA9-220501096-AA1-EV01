@@ -14,6 +14,7 @@ import com.jmteamconsulting.sgps.repository.DepartmentRepository;
  * operaciones sobre registros Department.
  */
 @Service
+@SuppressWarnings("null")
 public class DepartmentServiceImplementation implements DepartmentService {
     @Autowired
     DepartmentRepository departmentRepository;

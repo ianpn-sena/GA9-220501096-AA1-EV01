@@ -14,6 +14,7 @@ import com.jmteamconsulting.sgps.repository.CityRepository;
  * operaciones sobre registros City.
  */
 @Service
+@SuppressWarnings("null")
 public class CityServiceImplementation implements CityService {
     @Autowired
     CityRepository cityRepository;
