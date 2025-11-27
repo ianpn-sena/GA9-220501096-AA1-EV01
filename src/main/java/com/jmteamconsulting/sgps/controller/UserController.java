@@ -167,7 +167,7 @@ public class UserController {
      * 
      * @param token El token en la cookie SGPS_SESSION_TOKEN.
      * @param userData Objeto POJO que defije todos los campos necesarios del cuerpo de la solicitud. Debe cumplir con las validaciones que define.
-     * @return El User que se acaba de crear con un código HTTP 200 si el token es válido y si no hubo errores. De lo contrario
+     * @return El User que se acaba de crear con un código HTTP 200 si el token es válido y si no hubo errores.
      */
     @PostMapping(path = "user")
     public ResponseEntity<User> createUser(@CookieValue(value = "SGPS_SESSION_TOKEN", required = false) String token, @RequestBody @Valid UserControllerDTO userData) {
