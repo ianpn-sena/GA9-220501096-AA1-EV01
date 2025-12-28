@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +36,9 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTests {
+    // Número de repeticiones a realizar en pruebas de volumen
+    static final int VOLUME_TEST_REPETITIONS = 10000;
+
     // Usuario usado para la mayoría de las pruebas
     static final String MOCK_LOGIN_EMAIL = "admin@admin.admin";
     static final String MOCK_LOGIN_PASSWORD = "Abcd1234*";
@@ -280,5 +284,181 @@ public class UserControllerTests {
         final User user = userRepository.findById(1L).orElse(null);
 
         assertNull(user);
+    }
+
+    /**
+     * Crea un nuevo usuario y regresa una referencia a este usuario.
+     * Usado por createNUsers(), el cual es ejecutado por pruebas en volumen volumeTest*().
+     * 
+     * @param loginCookies Cookies a usar para autenticarse con el sistema.
+     * @param userData Datos del usuario a crear.
+     * @return Referencia al usuario creado en caso de no haber ocurrido errores.
+     * @throws Exception Errores no manejados explícitamente que causan que la prueba falle.
+     */
+    private User createTestUser(List<Cookie> loginCookies, UserControllerDTO userData) throws Exception {
+        mockMvc.perform(
+            post("/api/v1/user")
+            .accept("application/json")
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(userData))
+            .cookie(loginCookies.get(0))
+            .cookie(loginCookies.get(1))
+        ).andExpect(status().is2xxSuccessful());
+
+        final User user = userRepository.findByEmail(userData.email).orElse(null);
+        return user;
+    }
+
+    /**
+     * Crea una cantidad de N objetos User y los regresa.
+     * Usa createTestUser() para crear usuarios individuales.
+     * 
+     * @param loginCookies Cookies a usar para autenticarse con el sistema.
+     * @param n La cantidad de usuarios a crear.
+     * @return Listado de N usuarios.
+     * @throws Exception Errores no manejados explícitamente que causan que la prueba falle.
+     */
+    private List<User> createNUsers(List<Cookie> loginCookies, int n) throws Exception {
+        List<User> users = new ArrayList<>();
+        UserControllerDTO userData;
+
+        for (int i = 0; i < n; i++) {
+            userData = new UserControllerDTO();
+            userData.names = String.format("Nombre %s", i + 1);
+            userData.surname = String.format("Apellidos %s", i + 1);
+            userData.document_type_id = Long.valueOf((i % 4) + 1);
+            userData.document_number = String.format("Documento %s", i + 1);
+            userData.email = String.format("%s@prueba.com", i + 1);
+            userData.password = String.format("Contraseña %s", i + 1);
+            userData.country_id = 1L;
+            userData.department_id = Long.valueOf((i % 5) + 1);
+            userData.city_id = Long.valueOf((i % 5) + 1);
+            userData.phone_number = String.format("Teléfono %s", i + 1);
+            userData.address_1 = String.format("Primera línea dirección %s", i + 1);
+            userData.address_2 = String.format("Segunda línea dirección %s", i + 1);
+            userData.zip_code = i + 1;
+
+            users.add(createTestUser(loginCookies, userData));
+        }
+
+        return users;
+    }
+
+    /**
+     * Prueba de volumen que crea una gran cantidad de usuarios y verifica que están
+     * siendo creados.
+     * 
+     * @throws Exception Errores no manejados explícitamente que causan que la prueba falle.
+     */
+    @Test
+    void volumeTestCreateUser() throws Exception {
+        List<Cookie> loginCookies = getLoginCookies(MOCK_LOGIN_EMAIL, MOCK_LOGIN_PASSWORD);
+
+        List<User> users = createNUsers(loginCookies, VOLUME_TEST_REPETITIONS);
+        User user;
+
+        for (int i = 0; i < VOLUME_TEST_REPETITIONS; i++) {
+            user = users.get(i);
+
+            assertNotNull(user);
+            assertNotNull(user.getId());
+            assertEquals(user.getEmail(), String.format("%s@prueba.com", i + 1));
+        }
+    }
+
+    /**
+     * Prueba de volumen que modifica una gran cantidad de usuarios y veridica que estén
+     * siendo modificados. Crea una gran cantidad de usuarios antes de realizar las
+     * modificaciones.
+     * 
+     * @throws Exception Errores no manejados explícitamente que causan que la prueba falle.
+     */
+    @Test
+    void volumeTestUpdateUsers() throws Exception {
+        List<Cookie> loginCookies = getLoginCookies(MOCK_LOGIN_EMAIL, MOCK_LOGIN_PASSWORD);
+
+        List<User> users = createNUsers(loginCookies, VOLUME_TEST_REPETITIONS);
+        List<User> updatedUsers = new ArrayList<>();
+        User user;
+        UserControllerDTO updatedUserData;
+        User updatedUser;
+        
+        for (int i = 0; i < VOLUME_TEST_REPETITIONS; i++) {
+            user = users.get(i);
+
+            updatedUserData = new UserControllerDTO();
+            updatedUserData.names = String.format("Nombre %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.surname = String.format("Apellidos %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.document_type_id = Long.valueOf((i % 4) + 1);
+            updatedUserData.document_number = String.format("Documento %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.email = String.format("%s@prueba.com", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.password = String.format("Contraseña %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.country_id = 1L;
+            updatedUserData.department_id = Long.valueOf((i % 5) + 1);
+            updatedUserData.city_id = Long.valueOf((i % 5) + 1);
+            updatedUserData.phone_number = String.format("Teléfono %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.address_1 = String.format("Primera línea dirección %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.address_2 = String.format("Segunda línea dirección %s", VOLUME_TEST_REPETITIONS + i + 1);
+            updatedUserData.zip_code = VOLUME_TEST_REPETITIONS + i + 1;
+
+            mockMvc.perform(
+                put(String.format("/api/v1/user/%s", user.getId()))
+                .accept("application/json")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(updatedUserData))
+                .cookie(loginCookies.get(0))
+                .cookie(loginCookies.get(1))
+            ).andExpect(status().is2xxSuccessful());
+
+            updatedUser = userRepository.findByEmail(updatedUserData.email).orElse(null);
+            updatedUsers.add(updatedUser);
+        }
+
+        assertEquals(users.size(), updatedUsers.size());
+
+        for (int i = 0; i < VOLUME_TEST_REPETITIONS; i++) {
+            user = users.get(i);
+            updatedUser = updatedUsers.get(i);
+
+            assertNotNull(user);
+            assertNotNull(updatedUser);
+            assertEquals(user.getId(), updatedUser.getId());
+            assertNotEquals(user.getEmail(), updatedUser.getEmail());
+            assertEquals(String.format("%s@prueba.com", VOLUME_TEST_REPETITIONS + i + 1), updatedUser.getEmail());
+        }
+    }
+
+    /**
+     * Prueba de volumen que elimina una gran cantidad de usuarios, y verifica que han
+     * sido completamente eliminados de la base de datos.
+     * 
+     * @throws Exception Errores no manejados explícitamente que causan que la prueba falle.
+     */
+    @Test
+    void volumeTestDeleteUsers() throws Exception {
+        List<Cookie> loginCookies = getLoginCookies(MOCK_LOGIN_EMAIL, MOCK_LOGIN_PASSWORD);
+
+        List<User> users = createNUsers(loginCookies, VOLUME_TEST_REPETITIONS);
+        User user;
+        User apiUser;
+
+        for (int i = 0; i < VOLUME_TEST_REPETITIONS; i++) {
+            user = users.get(i);
+
+            mockMvc.perform(
+                delete(String.format("/api/v1/user/%s", user.getId()))
+                .accept("application/json")
+                .contentType("application/json")
+                .cookie(loginCookies.get(0))
+                .cookie(loginCookies.get(1))
+            ).andExpect(status().is2xxSuccessful());
+        }
+
+        for (int i = 0; i < VOLUME_TEST_REPETITIONS; i++) {
+            user = users.get(i);
+            apiUser = userRepository.findById(user.getId()).orElse(null);
+
+            assertNull(apiUser);
+        }
     }
 }
