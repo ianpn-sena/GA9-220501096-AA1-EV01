@@ -73,7 +73,8 @@ public class UserServiceImplementation implements UserService {
      * 
      * @return Token de sesión.
      */
-    private static String generateRandomAuthToken() {
+    @Override
+    public String generateRandomAuthToken() {
         byte randomBytes[] = new byte[32];
         secureRandom.nextBytes(randomBytes);
 

@@ -62,6 +62,12 @@ public class Country {
         this.areaCode = areaCode;
     }
 
+    public Country(String name, String countryCode, String areaCode) {
+        this.name = name;
+        this.countryCode = countryCode;
+        this.areaCode = areaCode;
+    }
+
     public Long getId() {
         return id;
     }

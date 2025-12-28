@@ -11,6 +11,13 @@ import com.jmteamconsulting.sgps.model.entity.User;
  */
 public interface UserService {
     /**
+     * Genera un token de sesión aleatorio de autenticación, criptográficamente "seguro".
+     * 
+     * @return Token de sesión.
+     */
+    public String generateRandomAuthToken();
+
+    /**
      * Intenta identificar un User con el sistema.
      * 
      * @param email El email del User que se busca autenticar con el sistema.

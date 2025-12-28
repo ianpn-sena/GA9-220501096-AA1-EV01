@@ -135,6 +135,10 @@ public class Contact {
         this.zipCode = zipCode;
     }
 
+    public Contact(Country country, Department department, City city, String address1, String address2, Integer zipCode) {
+        this(null, country, department, city, address1, address2, zipCode);
+    }
+
     public Contact() {
 
     }

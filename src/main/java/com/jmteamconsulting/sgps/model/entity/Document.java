@@ -45,6 +45,10 @@ public class Document {
         this.number = number;
     }
 
+    public Document(DocumentType documentType, String number) {
+        this(null, documentType, number);
+    }
+
     public Long getId() {
         return id;
     }
